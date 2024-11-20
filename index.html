@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse von Geschäftsprozessen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #d9eaf5;
+        }
+        td.editable {
+            background-color: #f9f9f9;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        input, button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Analyse von Geschäftsprozessen</h1>
+    <h3>Portfolio-Analyse: Beispiel</h3>
+    <table id="processTable">
+        <thead>
+            <tr>
+                <th>Prozesse</th>
+                <th>Verbesserungspotenzial</th>
+                <th>Prozessattraktivität</th>
+                <th>Durchführbarkeit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="editable" contenteditable="true">Prozess 1</td>
+                <td class="editable" contenteditable="true"></td>
+                <td class="editable" contenteditable="true"></td>
+                <td class="editable" contenteditable="true"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="controls">
+        <button onclick="addRow()">Zeile hinzufügen</button>
+        <button onclick="addColumn()">Spalte hinzufügen</button>
+        <label for="fontSize">Schriftgröße:</label>
+        <input type="number" id="fontSize" value="16" onchange="changeFontSize(this.value)"> px
+    </div>
+    <script>
+        function addRow() {
+            const table = document.getElementById('processTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const cellCount = document.getElementById('processTable').rows[0].cells.length;
+            for (let i = 0; i < cellCount; i++) {
+                const newCell = newRow.insertCell(i);
+                newCell.contentEditable = "true";
+                newCell.className = "editable";
+            }
+        }
+
+        function addColumn() {
+            const table = document.getElementById('processTable');
+            const rows = table.rows;
+            const columnHeader = prompt("Spaltenname eingeben:", "Neue Spalte");
+            if (columnHeader) {
+                rows[0].insertCell(rows[0].cells.length).outerHTML = `<th>${columnHeader}</th>`;
+                for (let i = 1; i < rows.length; i++) {
+                    const newCell = rows[i].insertCell(rows[i].cells.length);
+                    newCell.contentEditable = "true";
+                    newCell.className = "editable";
+                }
+            }
+        }
+
+        function changeFontSize(size) {
+            const table = document.getElementById('processTable');
+            table.style.fontSize = size + "px";
+        }
+    </script>
+</body>
+</html>
